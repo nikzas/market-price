@@ -13,9 +13,8 @@ def search_product(page, product_name):
     """Поиск продукта по имени."""
     search_input_selector = '.header-control__text.d-none.d-md-block'  # Селектор для поля ввода
     page.goto('https://myspar.ru/')
-    #page.wait_for_selector(search_input_selector, timeout=60000)
+    page.wait_for_selector(search_input_selector, timeout=60000)
     page.click(search_input_selector)
-    #page.wait_for_selector('#input-smartsearch')
     page.fill('#input-smartsearch', product_name)
     page.wait_for_selector('.smartsearch__result')  # Ожидание результатов
     page.click('a[data-category-name="Овощи"]')
@@ -41,33 +40,27 @@ def navigate_to_page(page, page_number):
     # Ожидание появления первого продукта на новой странице
     page.wait_for_selector('.smartsearch__product', timeout=5000)  # Установите таймаут по необходимости
 
-
 def extract(page):
-    """Извлечение названий и цен продуктов из результатов поиска."""
+    """Извлечение уникальных названий продуктов из результатов поиска."""
     products = page.query_selector_all('.smartsearch__product')  # Получаем все продукты
-    product_data = []
-    unique_names = set()  # Множество для хранения уникальных названий
+    unique_names = set()  # Создаем множество для хранения уникальных названий
 
-    # Извлекаем наименование и цену для каждого продукта
+    # Извлекаем наименование для каждого продукта
     for product in products:
         # Извлекаем наименование
         name_element = product.query_selector('.smartsearch__product-info .smartsearch__product-name')
-        price_element = product.query_selector('.smartsearch__product-info-bottom .smartsearch__product-price')
 
-        # Получаем текст наименования и цены
-        res_name = name_element.inner_text().strip() if name_element else 'Не указано'
-        res_price = price_element.inner_text().strip() if price_element else 'Не указано'
-
-        # Проверяем, уникально ли название
-        if res_name not in unique_names:
+        # Проверяем, существует ли элемент
+        if name_element:
+            # Получаем текст наименования и добавляем в множество
+            res_name = name_element.inner_text().strip()
             unique_names.add(res_name)  # Добавляем название в множество
-            # Добавляем данные в список в виде словаря
-            product_data.append({
-                'name': res_name,
-                'price': res_price
-            })
+
+    # Преобразуем множество в отсортированный список
+    sorted_product_data = sorted(unique_names)  # Сортируем названия
+
+    # Преобразуем отсортированный список в список словарей
+    product_data = [{'name': name} for name in sorted_product_data]
 
     print(f"Найдено уникальных продуктов на странице: {len(product_data)}")  # Отладочное сообщение
     return product_data
-
-
