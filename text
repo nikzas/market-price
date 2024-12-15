@@ -1,0 +1,28 @@
+v div class="smartsearch"
+    v div class="smartsearch__container"
+        v div class="smartsearch__result"
+            v div class="smartsearch__product-container"
+                v div class="smartsearch__product-list"
+                    v div class="smartsearch__product"
+                        v div class="smartsearch__product-info"
+                            v href="https://myspar.ru/catalog/ovoshchi/tomaty-kokteylnye/"
+                            class="smartsearch__product-name" - Тут имя
+                            v class="smartsearch__product-info-bottom"
+                                v divclass="smartsearch__product-price" - это цена
+                    v div class="smartsearch__product"
+                    v div class="smartsearch__product"
+                    v div class="smartsearch__product"
+                    v div class="smartsearch__product"
+                    v div class="smartsearch__product"
+                    v div class="smartsearch__product"
+                    v div class="smartsearch__product"
+                    v div class="smartsearch__product"
+                    v div class="smartsearch__product"
+                    v div class="smartsearch__product"
+                    v div class="smartsearch__product"
+                v ul class="smartsearch__pagination"
+                    v li data-page="1"
+                    v li data-page="2"
+                    v li data-page="3"
+
+
